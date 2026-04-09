@@ -3,82 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MotionCo</title>
+    <title>MotionCo Studio</title>
     <style>
-        /* 1. Basic Reset */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body, html {
-            height: 100%;
-            width: 100%;
-            background-color: #000; /* Matches video black points */
-            overflow: hidden; /* Prevents scrollbars */
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            height: 100%; width: 100%;
+            background-color: #000;
+            overflow: hidden;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         }
 
-        /* 2. Full Screen Video Styling */
+        /* Full Screen Video */
         .video-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1; /* Keeps video behind the logo */
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
         }
 
         video {
-            /* Ensures video fills the screen and covers edge-to-edge */
-            width: 100vw;
-            height: 56.25vw; /* 16:9 Aspect Ratio */
-            min-height: 100vh;
-            min-width: 177.77vh; /* 16:9 Aspect Ratio */
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            object-fit: cover; /* Crops slightly to ensure full bleed */
+            width: 100%; height: 100%;
+            object-fit: cover;
         }
 
-        /* 3. Logo Overlay */
-        .logo-container {
-            position: relative;
-            z-index: 10; /* Keeps logo in front of the video */
+        /* Overlay UI */
+        .interface {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 40px;
+            color: white;
+            background: rgba(0,0,0,0.2); /* Subtle dim to make text pop */
+        }
+
+        /* Top: Branding/Logo */
+        .logo img {
+            width: 180px;
+            height: auto;
+        }
+
+        /* Center: Play/Toggle Button */
+        .controls {
             display: flex;
             justify-content: center;
             align-items: center;
-            pointer-events: none; /* Allows user to click "through" the logo */
-            width: 100%;
-            height: 100%;
         }
 
-        .studio-logo {
-            /* Control Logo Size here */
-            width: 300px; /* Adjust to your preferred fixed size */
-            max-width: 60%; /* Prevents logo from overflowing on mobile screens */
-            height: auto;
-            opacity: 0.9; /* Slight transparency to feel integrated */
-            filter: drop-shadow(0px 4px 10px rgba(0,0,0,0.5)); /* Adds subtle depth and separation from video */
+        #playToggle {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            color: white;
+            padding: 15px 30px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.7rem;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        #playToggle:hover {
+            background: white;
+            color: black;
+        }
+
+        /* Bottom: Contacts */
+        .footer {
+            display: flex;
+            gap: 30px;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+
+        .footer a:hover {
+            opacity: 1;
         }
     </style>
 </head>
 <body>
 
     <div class="video-container">
-        <video autoplay muted loop playsinline id="hero-video">
+        <!-- Starts muted to allow autoplay -->
+        <video id="myVideo" autoplay loop muted playsinline>
             <source src="mocoreel_v3.mp4" type="video/mp4">
-            Your browser does not support the video tag.
         </video>
     </div>
 
-    <div class="logo-container">
-        <img src="MOCO_Logo_v3.2.png" alt="MotionCo" class="studio-logo">
+    <div class="interface">
+        <div class="logo">
+            <img src="moco_logoBW.png" alt="MotionCo">
+        </div>
+
+        <div class="controls">
+            <button id="playToggle">Enable Audio / Play</button>
+        </div>
+
+        <div class="footer">
+            <a href="mailto:motioncostudio@gmail.com">Email</a>
+            <a href="https://instagram.com/wearemotionco" target="_blank">Instagram</a>
+        </div>
     </div>
+
+    <script>
+        const video = document.getElementById('myVideo');
+        const btn = document.getElementById('playToggle');
+
+        btn.addEventListener('click', () => {
+            if (video.muted) {
+                video.muted = false;
+                btn.innerHTML = "Mute";
+            } else {
+                if (video.paused) {
+                    video.play();
+                    btn.innerHTML = "Pause";
+                } else {
+                    video.pause();
+                    btn.innerHTML = "Play";
+                }
+            }
+        });
+    </script>
 
 </body>
 </html>
