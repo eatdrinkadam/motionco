@@ -25,12 +25,15 @@
             left: 0;
             width: 100%;
             height: 100%;
+            z-index: 1; /* Keeps video behind the logo */
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
         video {
+            /* Ensures video fills the screen and covers edge-to-edge */
             width: 100vw;
             height: 56.25vw; /* 16:9 Aspect Ratio */
             min-height: 100vh;
@@ -42,40 +45,39 @@
             object-fit: cover; /* Crops slightly to ensure full bleed */
         }
 
-        /* 3. Branding Overlay (Optional - Remove if you want pure video) */
-        .overlay {
+        /* 3. Logo Overlay */
+        .logo-container {
             position: relative;
-            z-index: 10;
-            color: white;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            text-align: center;
-            pointer-events: none; /* Allows clicking "through" the text */
-            opacity: 0.8;
-            letter-spacing: 0.2rem;
-            text-transform: uppercase;
-            font-size: 0.8rem;
+            z-index: 10; /* Keeps logo in front of the video */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none; /* Allows user to click "through" the logo */
+            width: 100%;
+            height: 100%;
+        }
+
+        .studio-logo {
+            /* Control Logo Size here */
+            width: 300px; /* Adjust to your preferred fixed size */
+            max-width: 60%; /* Prevents logo from overflowing on mobile screens */
+            height: auto;
+            opacity: 0.9; /* Slight transparency to feel integrated */
+            filter: drop-shadow(0px 4px 10px rgba(0,0,0,0.5)); /* Adds subtle depth and separation from video */
         }
     </style>
 </head>
 <body>
 
     <div class="video-container">
-        <!-- 
-             autoplay: starts immediately
-             muted: required for autoplay to work in browsers
-             loop: keeps it running
-             playsinline: vital for mobile support
-             (No 'controls' attribute means no timeline or play button)
-        -->
         <video autoplay muted loop playsinline id="hero-video">
-            <source src="mocoreel_v3.mp4" type="video/mp4">
+            <source src="reel.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
     </div>
 
-    <!-- Optional: Subtle text overlay -->
-    <div class="overlay">
-        <h1>MotionCo</h1>
+    <div class="logo-container">
+        <img src="moco_logo_v2.png" alt="MotionCo" class="studio-logo">
     </div>
 
 </body>
